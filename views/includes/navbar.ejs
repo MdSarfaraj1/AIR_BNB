@@ -1,0 +1,54 @@
+<style>
+  .btnForSearch{
+    border-radius: 20px;
+    background-color: rgb(233, 52, 97);
+  }
+  input.searchInput{
+    border-radius: 20px;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+  }
+</style>
+<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom  sticky-top mb-0">
+    <div class="container-fluid">
+       <a class="navbar-brand" href="/listings"><i class="fa-brands fa-airbnb"></i></a> 
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav me-auto  mb-lg-0">
+            <a class="nav-link" href="/listings">EXPLORE</a>
+            <a class="nav-link" href="/listings/insert">CREATE NEW</a>
+        </div>
+        <div class="navbar-nav me-auto">
+           <form class="d-flex" role="search">
+          <input class="form-control me-2 searchInput" type="search" placeholder="Search Destination" aria-label="Search" />
+          <button class="btn btn-danger btnForSearch" type="submit" >
+            <i class="fa-solid fa-magnifying-glass" style="display: inline;"></i>Search</button>
+        </form>
+        </div>
+       
+            <!-- <div class="nav-item dropdown ms-auto" >
+              <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Options
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="">Log In</a></li>
+                <li><a class="dropdown-item" href="">Create Account</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="">Log Out</a></li>
+              </ul>
+            </div> -->
+        <div class="navbar-nav ms-auto  mb-lg-0">
+          <%if(!currentUser){%>
+            <a class="nav-link active" aria-current="page" href="/user/login"><b>Log in</b> </a>
+          <a class="nav-link" href="/user/signUp"><B>Sign Up</B></a>
+          <%}%>
+          <%if(currentUser){%>
+          <a class="nav-link" href="/user/logout"><B>Log Out</B></a>
+          <%}%>
+         </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- we cant accesss req.user here so we take help of locals i.e. req.locals.currentUser=req.user; *see app.js -->

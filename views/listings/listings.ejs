@@ -1,0 +1,95 @@
+<% layout("/layouts/boilerplate.ejs")%>
+<script>  // this script will rum first and the map.js will be able to take access of 
+        //the below variables (as map.js is included in this file )
+        // as public folder cant access this env variablews directly 
+    const mapToken="<%=process.env.MAP_TOKEN%>";
+    const coordinates=<%-JSON.stringify(data.geometry.coordinates)%>
+</script>
+<div class="row mt-3">
+    <div class="col-8 offset-2">  <!-- take 8 column but skip 2 from left-->
+        <h3><b><%=data.title%></b></h3>
+    </div>
+    <div class="card card-listing col-8 offset-2">
+        <img src="<%=data.image.url%>" class="card-img-top show-big-image" alt="image">
+     <div class="card-body">
+            <p class="card-text">Created By <%=data.owner.username%></p>
+            <%=data.description%><br>
+            &#8377;<%=data.price.toLocaleString('en-IN')%><br>
+            <%=data.location%><br>
+            <%=data.country%><br>
+            <%if(currentUser && currentUser._id.equals(data.owner._id)){%>
+            <div class="row mt-2">
+                <div class="col-3">
+                    <form method="get" action="/listings/<%=data._id%>/update">
+                        <button class="btn add-btn mb-3 mt-2" >EDIT</button>
+                        </form>     
+                </div>
+                <div class="col-6 mt-2">
+                    <form method="get" action="/listings/<%=data._id%>/delete">
+                    <button class="btn btn-dark">Delete </button>
+                    </form> 
+                </div>
+            </div>
+           <% }%>
+            <hr>
+            <br>
+            <h3>All reviews</h3>  <!--to show the reviews-->
+            <div class="row">
+                <% if (data.reviews && data.reviews.length > 0) { %>
+                    <% for (let review of data.reviews) { %>
+                        <div class="card col-5 ms-3 mb-3 mt-2">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <p><b>@<%= review.Rowner.username %></b></p>
+                                    <p class="starability-result" data-rating="<%= review.rating %>"></p> <!-- showing stars as rating -->
+                                    <p><%= review.comment %></p>
+                                </div>
+                                <form method="post" action="/listings/<%= data._id %>/review/<%= review._id %>?_method=DELETE">
+                                    <button class="btn btn-sm btn-dark mb-1">Delete</button> <!-- for deleting the review -->
+                                </form><br>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <p>No review yet</p>
+                <% } %>    
+            </div><br>
+            <%if(currentUser){%>
+            <div class=" row mt-2"> <!-- for creating new review-->
+                <h4>Leave a Review</h4>
+                <b>Rating</b>
+                <form method="post" action="/listings/<%=data._id%>/review" class="needs-validation " novalidate>
+                        <fieldset class="starability-slot"> <!--for starability-->
+                        
+                            <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="1" checked aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="rating" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="rating" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="rating" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="rating" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="rating" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                        <label for="comment" class="form-label"><b>Write comment</b></label>
+                        <textarea required id="comment" class="form-control " cols="50" rows="7"  name="comment"></textarea>
+                        <div class="invalid-feedback"> Please give some comment</div>
+            
+                    <br><button class="btn btn-outline-dark">Submit</button>
+                </form>
+        
+            </div>
+            <%}%>
+        </div>
+    </div>
+    <div  class="card card-listing col-8 offset-2">
+        <h2>Where you will be:</h2>
+        <div id="map" style="border: 2px solid black;">  <!--for showing map-->
+
+        </div>    
+    </div>
+
+</div>
+<script src="/javascript/map.js"></script>

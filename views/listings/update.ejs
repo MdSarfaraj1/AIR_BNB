@@ -1,0 +1,55 @@
+
+<% layout("/layouts/boilerplate.ejs")%>
+<div class="row">
+    <div class="col-8 offset-2"><br><br>
+    <h3>Update Listing</h3>
+    <form method="post" action="/listings/<%=data.id%>/update?_method=PATCH" class="needs-validation" novalidate enctype="multipart/form-data">
+        <div> <label for="title" class="form-label">Title</label>
+            <input type="text" value="<%=data.title%>" name="title" id="title" class="form-control">
+        </div><br>
+        <div class="mb-3 "  >
+            Existing image:<br>
+            <img style="width: 20rem; height: 20rem;" src=" <%=originalImage%>">
+        </div>
+        <div class="row">
+            <div class="mb-3 col-4 ">
+                Select New Image
+               <input type="file"   name="image[url]" id="image"   class="form-control">
+            </div>
+          <div class="dropdown offset-2 form-label mb-3 col-6 ml-3">
+            <label for="category">Choose Category</label>
+             <select id="category" name="category" class="form-select">
+                <option value="" disabled>Select a category</option> 
+                <option value="pools">Pools</option>
+                <option value="houseboats">Houseboats</option>
+                <option value="trendings">Trendings</option>
+                <option value="mantions">Mantions</option>
+                <option value="hills">Hills</option>
+                <option value="arctics">Arctics</option>
+                <option value="campings">Campings</option>
+                <option value="apartments">Apartments</option>
+                <option value="lakes">Lakes</option>
+             </select>
+            </div>
+        </div>
+        
+        <div><label for="description" class="form-label">Description</label>
+            <textarea name="description"  id="description" required class="form-control"><%=data.description%></textarea><br>
+        </div>
+        <div class="row ">
+            <div class="mb-3 col-4"><label for="price" class="form-label">Price</label>
+                <input type="number" name="price" value="<%=data.price%>" id="price" class="form-control">
+            </div>
+            <div class="col-8"><label for="location" class="form-label">Location</label>
+                <input type="text" name="location" value="<%=data.location%>" id="location" class="form-control">
+            </div>
+        </div>
+        
+        <div><label for="country" class="form-label">Country</label>
+            <input type="text" name="country"value="<%=data.country%>" id="country" class="form-control">
+        </div>
+     
+        <br><button class="add-btn">Update</button><br>
+    </form>
+</div>
+</div>
