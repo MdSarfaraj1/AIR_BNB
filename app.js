@@ -31,7 +31,7 @@ const secret=process.env.SECRET;
 //database connction==========================================================================================
 async function main() 
 {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(ATLAS_CONNECT_URL);
 }
 main()
 .then(()=>{  
