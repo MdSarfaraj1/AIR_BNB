@@ -102,7 +102,7 @@ passport.deserializeUser(User.deserializeUser());//It tells Passport how to take
 app.use((req,res,next)=>{ 
     res.locals.success=req.flash("success"); // res.locals set the local variables that are accessible in view templtes
     res.locals.error=req.flash("error"); 
-    res.locals.currentUser=req.user;// see navbar.ejs line 41
+    res.locals.currentUser=req.user||"XYZ";// see navbar.ejs line 41
     next();
 });
 //the above is for session and flash -------------------------------------------------------------------
